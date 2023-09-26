@@ -187,3 +187,20 @@ func init() {
 	decryptCMD.StringVar(&decryptionKey, "key", "", "The decryption key")
 	parseCLArgs()
 }
+
+func main() {
+	switch parseCLArgs() {
+	case encrypt:
+		if err := encryptor.EncryptFile(inputFile, outputFile, []byte(encryptionKey)); err != nil {
+			fmt.Fprintf(os.Stderr, "encrypt: %s\n", err)
+			os.Exit(2)
+		}
+	case decrypt:
+		if err := encryptor.DecryptAES_File(inputFile, outputFile, []byte(decryptionKey)); err != nil {
+			fmt.Fprintf(os.Stderr, "decrypt: %s\n", err)
+			os.Exit(2)
+		}
+	default:
+		os.Exit(0)
+	}
+}
