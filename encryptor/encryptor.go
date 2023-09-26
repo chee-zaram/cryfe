@@ -56,3 +56,25 @@ func EncryptFile(inputFile, outputFile string, key []byte) error {
 
 	return os.WriteFile(outputFile, cipherText, 0644)
 }
+
+// DecryptAES_File decrypts a file using AES algorithm if it is available.
+// It returns any error that may have occured.
+func DecryptAES_File(inputFile, outputFile string, key []byte) error {
+	cipherText, err := readInputFile(inputFile)
+	if err != nil {
+		return err
+	}
+
+	block, err := createAES_CipherBlock(key)
+	if err != nil {
+		return err
+	}
+
+	buf := cipherText[:aes.BlockSize]
+	cipherText = cipherText[aes.BlockSize:]
+
+	mode := cipher.NewCBCDecrypter(block, buf)
+	mode.CryptBlocks(cipherText, cipherText)
+
+	return os.WriteFile(outputFile, cipherText, 0644)
+}
