@@ -60,7 +60,7 @@ func Test_createAES_CipherBlock_NilKey(t *testing.T) {
 func Test_readRandBytesToBuf(t *testing.T) {
 	buf := make([]byte, 16)
 
-	n, err := readRandBytesToBuf(buf)
+	n, err := readRandBytesToIV(buf)
 	if err != nil {
 		t.Fatalf("Error reading random bytes: %v", err)
 	}
@@ -70,7 +70,7 @@ func Test_readRandBytesToBuf(t *testing.T) {
 }
 
 func Test_readRandBytesToBuf_NilBuffer(t *testing.T) {
-	n, _ := readRandBytesToBuf(nil)
+	n, _ := readRandBytesToIV(nil)
 	if n != 0 {
 		t.Errorf("Expected number of bytes read to be 0, got %d", n)
 	}

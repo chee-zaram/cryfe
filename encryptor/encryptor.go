@@ -25,10 +25,10 @@ func createAES_CipherBlock(key []byte) (cipher.Block, error) {
 	return aes.NewCipher(key)
 }
 
-// readRandBytesToBuf takes a slice of bytes and reads randome bytes into it
+// readRandBytesToIV takes a slice of bytes and reads randome bytes into it
 // from rand.Reader.
-func readRandBytesToBuf(buf []byte) (int, error) {
-	return io.ReadFull(rand.Reader, buf)
+func readRandBytesToIV(iv []byte) (int, error) {
+	return io.ReadFull(rand.Reader, iv)
 }
 
 // EncryptFile encrypts a file using AES algorithm and returns an error if any.
@@ -44,13 +44,13 @@ func EncryptFile(inputFile, outputFile string, key []byte) error {
 	}
 
 	cipherText := make([]byte, aes.BlockSize+len(plainText))
-	buf := cipherText[:aes.BlockSize]
+	iv := cipherText[:aes.BlockSize]
 
-	if _, err := readRandBytesToBuf(buf); err != nil {
+	if _, err := readRandBytesToIV(iv); err != nil {
 		return err
 	}
 
-	mode := cipher.NewCBCEncrypter(block, buf)
+	mode := cipher.NewCBCEncrypter(block, iv)
 	mode.CryptBlocks(cipherText[aes.BlockSize:], plainText)
 
 	return os.WriteFile(outputFile, cipherText, 0644)
@@ -69,10 +69,10 @@ func DecryptAES_File(inputFile, outputFile string, key []byte) error {
 		return err
 	}
 
-	buf := cipherText[:aes.BlockSize]
+	iv := cipherText[:aes.BlockSize]
 	cipherText = cipherText[aes.BlockSize:]
 
-	mode := cipher.NewCBCDecrypter(block, buf)
+	mode := cipher.NewCBCDecrypter(block, iv)
 	mode.CryptBlocks(cipherText, cipherText)
 
 	return os.WriteFile(outputFile, cipherText, 0644)
