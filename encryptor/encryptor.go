@@ -15,8 +15,8 @@ func readInputFile(inputFile string) ([]byte, error) {
 	return os.ReadFile(inputFile)
 }
 
-// createAES_CipherBlock takes in a key and returns a block cipher and any error
-// which may have occured.
+// createAES_CipherBlock takes in a key and returns a new aes cipher block and
+// any error which may have occured.
 func createAES_CipherBlock(key []byte) (cipher.Block, error) {
 	if key == nil {
 		return nil, fmt.Errorf("key cannot be nil")
@@ -31,8 +31,7 @@ func readRandBytesToBuf(buf []byte) (int, error) {
 	return io.ReadFull(rand.Reader, buf)
 }
 
-// EncryptFile encrypts a file using AES algorithm if it is available.
-// It returns an error if any occurs.
+// EncryptFile encrypts a file using AES algorithm and returns an error if any.
 func EncryptFile(inputFile, outputFile string, key []byte) error {
 	plainText, err := readInputFile(inputFile)
 	if err != nil {
