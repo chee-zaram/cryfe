@@ -197,6 +197,7 @@ func parseCLArgs() string {
 func init() {
 	cryfeCMD.Usage = cryfeUsage
 	encryptCMD.Usage = encryptUsage
+	decryptCMD.Usage = decryptUsage
 	encryptCMD.StringVar(&encryptionKeyFile, "key", "", "The encryption key")
 	decryptCMD.StringVar(&decryptionKeyFile, "key", "", "The decryption key")
 	parseCLArgs()
