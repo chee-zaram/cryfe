@@ -205,16 +205,28 @@ func init() {
 func main() {
 	switch parseCLArgs() {
 	case encrypt:
-		if err := encryptor.EncryptFile(inputFile, outputFile, []byte(encryptionKey)); err != nil {
+		if err := runEncrypt(); err != nil {
 			fmt.Fprintf(os.Stderr, "encrypt: %s\n", err)
 			os.Exit(2)
 		}
 	case decrypt:
-		if err := encryptor.DecryptAES_File(inputFile, outputFile, []byte(decryptionKey)); err != nil {
+		if err := runDecrypt(); err != nil {
 			fmt.Fprintf(os.Stderr, "decrypt: %s\n", err)
 			os.Exit(2)
 		}
 	default:
 		os.Exit(0)
 	}
+}
+
+// runEncrypt calls the encryption function and returns any error that may have
+// occured.
+func runEncrypt() error {
+	return encryptor.EncryptFile(inputFile, outputFile, []byte(encryptionKey))
+}
+
+// runDecrypt calls the decryption function and returns any error that may have
+// occured.
+func runDecrypt() error {
+	return encryptor.DecryptAES_File(inputFile, outputFile, []byte(encryptionKey))
 }
