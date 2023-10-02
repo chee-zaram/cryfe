@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -15,10 +16,12 @@ var (
 )
 
 var (
-	encryptionKey string
-	decryptionKey string
-	inputFile     string
-	outputFile    string
+	encryptionKeyFile string
+	encryptionKey     []byte
+	decryptionKeyFile string
+	decryptionKey     []byte
+	inputFile         string
+	outputFile        string
 )
 
 const (
@@ -99,9 +102,20 @@ func parseCLArgs() string {
 	switch os.Args[1] {
 	case encrypt:
 		encryptCMD.Parse(os.Args[2:])
-		if encryptionKey == "" {
+		if encryptionKeyFile == "" {
 			fmt.Fprintln(os.Stderr, "Please, provide an encryption key with -key")
 			os.Exit(1)
+		}
+
+		var err error
+		encryptionKey, err = os.ReadFile(encryptionKeyFile)
+		if err != nil && !errors.Is(err, os.ErrNotExist) {
+			fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+
+		if err != nil {
+			encryptionKey = []byte(encryptionKeyFile)
 		}
 
 		if len(os.Args) < 5 {
@@ -126,7 +140,7 @@ func parseCLArgs() string {
 
 	case decrypt:
 		decryptCMD.Parse(os.Args[2:])
-		if decryptionKey == "" {
+		if decryptionKeyFile == "" {
 			fmt.Fprintln(os.Stderr, "Please, provide a decryption key with -key")
 			os.Exit(1)
 		}
@@ -183,8 +197,8 @@ func parseCLArgs() string {
 func init() {
 	cryfeCMD.Usage = cryfeUsage
 	encryptCMD.Usage = encryptUsage
-	encryptCMD.StringVar(&encryptionKey, "key", "", "The encryption key")
-	decryptCMD.StringVar(&decryptionKey, "key", "", "The decryption key")
+	encryptCMD.StringVar(&encryptionKeyFile, "key", "", "The encryption key")
+	decryptCMD.StringVar(&decryptionKeyFile, "key", "", "The decryption key")
 	parseCLArgs()
 }
 
