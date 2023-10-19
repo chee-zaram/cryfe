@@ -221,13 +221,13 @@ func main() {
 }
 
 // runEncrypt calls the encryption function and returns any error that may have
-// occured.
+// occurred.
 func runEncrypt() error {
 	return encryptor.EncryptFile(inputFile, outputFile, []byte(encryptionKey))
 }
 
 // runDecrypt calls the decryption function and returns any error that may have
-// occured.
+// occurred.
 func runDecrypt() error {
 	return encryptor.DecryptAES_File(inputFile, outputFile, []byte(encryptionKey))
 }

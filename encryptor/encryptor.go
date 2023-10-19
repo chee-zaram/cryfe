@@ -10,13 +10,13 @@ import (
 )
 
 // readInputFile calls os.ReadFile to read a file, and returns the plain text
-// and any error that may have occured.
+// and any error that may have occurred.
 func readInputFile(inputFile string) ([]byte, error) {
 	return os.ReadFile(inputFile)
 }
 
 // createAES_CipherBlock takes in a key and returns a new aes cipher block and
-// any error which may have occured.
+// any error which may have occurred.
 func createAES_CipherBlock(key []byte) (cipher.Block, error) {
 	if key == nil {
 		return nil, fmt.Errorf("key cannot be nil")
@@ -57,7 +57,7 @@ func EncryptFile(inputFile, outputFile string, key []byte) error {
 }
 
 // DecryptAES_File decrypts a file using AES algorithm if it is available.
-// It returns any error that may have occured.
+// It returns any error that may have occurred.
 func DecryptAES_File(inputFile, outputFile string, key []byte) error {
 	cipherText, err := readInputFile(inputFile)
 	if err != nil {
