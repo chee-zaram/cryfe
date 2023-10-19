@@ -1,8 +1,8 @@
 # CONTRIBUTING
 
 Thank you for your interest in contributing to this project. We don't have so
-many rules, except some basic ones to make sure the code is well written and the
-code is well tested.
+many rules, except some basic ones to make sure the code is well-written and the
+code is well-tested.
 
 - Please, properly document functions and global identifiers.
 - Make sure to write tests where applicable, and that all tests pass.

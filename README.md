@@ -5,7 +5,7 @@
 </div>
 
 [![Workflow](https://github.com/chee-zaram/cryfe/actions/workflows/go.yml/badge.svg)][workflow]
-[![Go Report](https://goreportcard.com/badge/github.com/wigit-ng/webapp/backend)][report]
+[![Go Report](https://goreportcard.com/badge/github.com/chee-zaram/cryfe)][report]
 
 > WIP :)
 
@@ -38,7 +38,7 @@ files, primarily on the command line, but also via a web application.
 
 ## Contributing
 
-We are actively seeking for contributor to bring the **CryFE** project to life.
+We are actively seeking contributors to bring the **CryFE** project to life.
 Please, read the instructions on how to be of help [here](CONTRIBUTING.md).
 
 [workflow]: https://github.com/chee-zaram/cryfe/actions/workflows/go.yml?query=branch%3Amain+event%3Apush
